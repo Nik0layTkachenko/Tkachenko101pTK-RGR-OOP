@@ -1,0 +1,11 @@
+E:\SeaShip\SeaWar\SeaWar\obj\Debug\SeaWar.csproj.AssemblyReference.cache
+E:\SeaShip\SeaWar\SeaWar\obj\Debug\SeaWar.csproj.SuggestedBindingRedirects.cache
+E:\SeaShip\SeaWar\SeaWar\obj\Debug\SeaWar.Form1.resources
+E:\SeaShip\SeaWar\SeaWar\obj\Debug\SeaWar.Properties.Resources.resources
+E:\SeaShip\SeaWar\SeaWar\obj\Debug\SeaWar.csproj.GenerateResource.cache
+E:\SeaShip\SeaWar\SeaWar\obj\Debug\SeaWar.csproj.CoreCompileInputs.cache
+E:\SeaShip\SeaWar\SeaWar\bin\Debug\SeaWar.exe.config
+E:\SeaShip\SeaWar\SeaWar\bin\Debug\SeaWar.exe
+E:\SeaShip\SeaWar\SeaWar\bin\Debug\SeaWar.pdb
+E:\SeaShip\SeaWar\SeaWar\obj\Debug\SeaWar.exe
+E:\SeaShip\SeaWar\SeaWar\obj\Debug\SeaWar.pdb
