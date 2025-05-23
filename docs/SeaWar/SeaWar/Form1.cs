@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,6 +10,139 @@ using System.Windows.Forms;
 
 namespace SeaWar
 {
+
+	using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+    public class Bot
+    {
+        public int[,] myMap = new int[Form1.mapSize, Form1.mapSize];
+        public int[,] enemyMap = new int[Form1.mapSize, Form1.mapSize];
+
+        // Ці масиви зберігають інформацію про кноопки 
+        public Button[,] myButtons = new Button[Form1.mapSize, Form1.mapSize];
+        public Button[,] enemyButtons = new Button[Form1.mapSize, Form1.mapSize];
+
+        public Bot(int[,] myMap, int[,] enemyMap, Button[,] myButtons, Button[,] enemyButtons)
+        {
+            this.myMap = myMap;
+            this.enemyMap = enemyMap;
+            this.myButtons = myButtons;
+            this.enemyButtons = enemyButtons;
+        }
+
+        // Функція потрібна для того щоб передбачити вихід за кордони ігрового поля
+        public bool IsInsideMap(int i, int j)
+        {
+            if (i < 0 || j < 0 || i >= Form1.mapSize || j >= Form1.mapSize)
+            {
+                return false;
+            }
+            return true; 
+        }
+
+        public bool IsEmpty(int i, int j, int length)
+        {
+            bool isEmpty = true;
+
+            for (int k = j; k < j + length; k++)
+            {
+                if (myMap[i, k] != 0)
+                {
+                    isEmpty = false;
+                    break;
+                }
+            }
+
+            return isEmpty;
+        }
+
+        // Створює кораблі на карті ворога
+        public int[,] ConfigureShips()
+        {
+            int lengthShip = 4;
+            int cycleValue = 4;
+            int shipsCount = 10;
+            Random r = new Random();
+
+            int posX = 0;
+            int posY = 0;
+
+            while (shipsCount > 0)
+            {
+                for (int i = 0; i < cycleValue / 4; i++)
+                {
+                    posX = r.Next(1, Form1.mapSize);
+                    posY = r.Next(1, Form1.mapSize);
+
+                    // Цикл створює нові координати корабля, якщо попередні були створенні не коректно
+                    while (!IsInsideMap(posX, posY + lengthShip - 1) || !IsEmpty(posX, posY, lengthShip))
+                    {
+                        posX = r.Next(1, Form1.mapSize);
+                        posY = r.Next(1, Form1.mapSize);
+                    }
+                    for (int k = posY; k < posY + lengthShip; k++)
+                    {
+                        myMap[posX, k] = 1;
+                    }
+
+
+
+                    shipsCount--;
+                    if (shipsCount <= 0)
+                        break;
+                }
+                cycleValue += 4;
+                lengthShip--;
+            }
+            return myMap;
+        }
+
+        public bool Shoot()
+        {
+            bool hit = false;
+            
+            Random random = new Random();
+
+            int posX = random.Next(1, Form1.mapSize);   
+            int posY = random.Next(1, Form1.mapSize);
+            
+            // Цикл потрібен для того щоб бот не стріляв в одне
+            while (enemyButtons[posX, posY].BackColor == Color.Blue || enemyButtons[posX, posY].BackColor == Color.Black)
+            {
+                posX = random.Next(1, Form1.mapSize);
+                posY = random.Next(1, Form1.mapSize);
+            }
+
+            // Клітинка прі влученні в неї
+            if (enemyMap[posX, posY] != 0)
+            {
+                hit = true;
+
+                enemyMap[posX, posY] = 0;
+                enemyButtons[posX, posY].BackColor = Color.Blue;
+                enemyButtons[posX, posY].Text = "X";
+            }
+            else
+            {
+                hit = false;
+
+                enemyButtons[posX, posY].BackColor = Color.Black;
+            }
+
+            // Якщо бот влучив – він стріляє ще раз
+            if (hit)
+                Shoot();
+
+            return hit;
+        }
+    }
+
     public partial class Form1 : Form
     {
 
@@ -20,7 +153,7 @@ namespace SeaWar
         public int[,] myMap = new int[mapSize, mapSize];
         public int[,] enemyMap = new int[mapSize, mapSize];
 
-        // Эти масивы хранят информацию о кнопках 
+        // Ці масиви зберігають інформацію про кнопки
         public Button[,] myButtons = new Button[mapSize, mapSize];
         public Button[,] enemyButtons = new Button[mapSize, mapSize];
 
@@ -29,7 +162,7 @@ namespace SeaWar
         bool isPlaying = false;
         public Form1()
         {
-            this.Text = "Морской бой";
+            this.Text = "Морський бій";
             InitializeComponent();
             Init();
         }
@@ -45,7 +178,7 @@ namespace SeaWar
 
         public void CreatMap()
         {
-            // Розмер Form1
+            // Розмір Form1
             this.Width = mapSize * 2 * cellSize + 40; 
             this.Height = (mapSize+1) * cellSize + 50;
 
@@ -82,7 +215,7 @@ namespace SeaWar
                 }
             }
 
-            // Вражеское поле
+            // Вороже поле
             for (int i = 0; i < mapSize; i++)
             {
                 for (int j = 0; j < mapSize; j++)
@@ -109,7 +242,7 @@ namespace SeaWar
                     }
                     else
                     {
-                        // Присваиваем вражеским кнопкам оброботчик playerShoot
+                        // Присвоюєм ворожим кнопкам обробщик  playerShoot
                         button.Click += new EventHandler(playerShoot);
                     }
                     enemyButtons[i,j] = button;
@@ -117,30 +250,30 @@ namespace SeaWar
                 }
             }
             Label map1 = new Label();
-            map1.Text = "Карта игрока";
+            map1.Text = "Мапа гравця";
             map1.Location = new Point(mapSize * cellSize / 2, mapSize * cellSize + 10);
             this.Controls.Add(map1);
 
             Label map2 = new Label();
-            map2.Text = "Карта врага";
+            map2.Text = "Мапа ворога";
             map2.Location = new Point(350 + mapSize * cellSize / 2, mapSize * cellSize + 10);
             this.Controls.Add(map2);
 
-            // Кнопка которой мы наченаем игру
+            // Кнопка якою ми починаємо гру
             Button startButton = new Button();
-            startButton.Text = "Начать";
+            startButton.Text = "Почати";
             startButton.Click += new EventHandler(Start);
             startButton.Location = new Point(300, mapSize * cellSize + 10);
             this.Controls.Add(startButton);
         }
 
-        // Функцыя отвечает за Старт игры
+        // Функція відповідає за старт гри
         public void Start(object sender, EventArgs e)
         {
             isPlaying = true;
         }
 
-        // Функцыя проверяет карты на наличие кораблей 
+        // Функція перевіряє карти на наявність кораблів
         public bool ChackIfMapIsNotEmpty()
         {
             bool isEmpty1 = true;
