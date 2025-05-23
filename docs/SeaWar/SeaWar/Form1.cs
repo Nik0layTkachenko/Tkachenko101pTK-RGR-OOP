@@ -295,7 +295,7 @@ using System.Windows.Forms;
             else return true;
         }
 
-        // Повидение кнопок при нажатии 
+        // Пводження кнопок при натисканнях
         public void ConfigureShips(object sender, EventArgs e)
         {
             Button pressedButton = sender as Button;
@@ -314,16 +314,16 @@ using System.Windows.Forms;
             }
         }
 
-        // Эта функция обробатывает событие нажатие кнопки
+        // Ця функція обробляє процес натискання кнопки
         public void playerShoot(object sender, EventArgs e)
         {
             Button pressedButton = sender as Button;
             bool plyartTurn = Shoot(enemyMap, pressedButton);
-            // Этот if отвечает за стрельбу бота, тоесть когда мы стреляем бот стреляет нам в ответ
+            // Цей if відповідає за вогонь бота, коли ми стріляємо – бот стріляє у відповідь
             if (!plyartTurn)
                 bot.Shoot();
 
-            // Начинает игру заново 
+            // Почати игру заново 
             if (!ChackIfMapIsNotEmpty())
             {
                 this.Controls.Clear();
@@ -331,7 +331,7 @@ using System.Windows.Forms;
             }
         }
 
-        // В этой функции находится логика стрельбы
+        // В цій функції знаходиться логіка вогонь
         public bool Shoot(int[,] map, Button pressedButton)
         {
             bool hit = false;
@@ -339,7 +339,7 @@ using System.Windows.Forms;
             if (isPlaying)
             { 
                 int delta = 0;
-                // Этот if отвечает за смещения выстрела на карту врага 
+                // Цей if відповідає за заміщення постріла на мапу ворога
                 if (pressedButton.Location.X > 320)
                 {
                     delta = 320;
