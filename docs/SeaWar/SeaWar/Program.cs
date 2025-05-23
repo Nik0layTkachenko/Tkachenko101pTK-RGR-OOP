@@ -9,7 +9,7 @@ namespace SeaWar
     internal static class Program
     {
         /// <summary>
-        /// Главная точка входа для приложения.
+        /// Головна точка входу для застосунку.
         /// </summary>
         [STAThread]
         static void Main()
