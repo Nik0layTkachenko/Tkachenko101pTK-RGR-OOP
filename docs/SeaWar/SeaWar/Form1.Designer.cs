@@ -1,16 +1,16 @@
-﻿namespace SeaWar
+namespace SeaWar
 {
     partial class Form1
     {
         /// <summary>
-        /// Обязательная переменная конструктора.
+        /// Обов’язкова змінна конструктора.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
-        /// Освободить все используемые ресурсы.
+        /// Звільнити всі використані ресурси.
         /// </summary>
-        /// <param name="disposing">истинно, если управляемый ресурс должен быть удален; иначе ложно.</param>
+        /// <param name="disposing">істинно, якщо керований ресурс має бути видалений; інакше — хибно.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -20,11 +20,11 @@
             base.Dispose(disposing);
         }
 
-        #region Код, автоматически созданный конструктором форм Windows
+        #region Код, автоматично згенерований конструктором форм Windows
 
         /// <summary>
-        /// Требуемый метод для поддержки конструктора — не изменяйте 
-        /// содержимое этого метода с помощью редактора кода.
+        /// Необхідний метод для підтримки конструктора — не змінюйте 
+        /// вміст цього методу за допомогою редактора коду.
         /// </summary>
         private void InitializeComponent()
         {
@@ -45,4 +45,3 @@
         #endregion
     }
 }
-
